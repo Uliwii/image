@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#241046">
+<title>LiberArte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noche:#241046;
+  --uva:#4B2392;
+  --violeta:#7A3FC4;
+  --lila:#D9C6F5;
+  --bruma:#F6F1FD;
+  --loto:#D94F9B;
+  --loto-claro:#F7C6E1;
+  --tinta:#2A1A45;
+  --gris:#675B7C;
+  --blanco:#fff;
+  --display:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;
+  --texto:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{
+  font-family:var(--texto);font-size:16px;line-height:1.5;color:var(--tinta);
+  background:radial-gradient(120% 90% at 20% 0%,#4B2392 0%,#241046 55%,#170930 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:20px;-webkit-font-smoothing:antialiased;
+}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--violeta);outline-offset:2px}
+.hero :focus-visible,.top :focus-visible{outline-color:var(--loto-claro)}
+
+.device{
+  position:relative;width:390px;height:min(844px,calc(100dvh - 60px));
+  background:var(--bruma);border-radius:38px;overflow:hidden;
+  display:grid;grid-template-rows:auto 1fr auto;
+  box-shadow:0 0 0 8px #120726,0 30px 80px rgba(0,0,0,.45);
+}
+.nota{color:var(--lila);font-size:13px;opacity:.85;text-align:center}
+
+/* Encabezado */
+.top{background:var(--noche);display:flex;align-items:center;justify-content:space-between;padding:14px 16px 12px 20px}
+.marca{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;font-size:23px;letter-spacing:-.02em;color:#fff}
+.marca b{color:#F08AC4;font-weight:700}
+.marca svg{width:30px;height:30px}
+.ocultar{
+  display:inline-flex;align-items:center;gap:7px;border:0;border-radius:999px;
+  background:var(--loto-claro);color:var(--noche);font-weight:600;font-size:14px;padding:8px 14px 8px 11px;
+}
+.ocultar svg{width:18px;height:18px}
+
+main{overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
+.vista{animation:entra .18s ease-out}
+@keyframes entra{from{opacity:0}to{opacity:1}}
+
+/* Inicio */
+.hero{background:linear-gradient(165deg,var(--noche) 0%,var(--uva) 62%,var(--violeta) 100%);color:#fff;padding:18px 20px 28px;border-radius:0 0 36px 36px}
+h1{font-family:var(--display);font-weight:700;font-size:32px;line-height:1.06;letter-spacing:-.025em;max-width:11em}
+.hero p{margin-top:10px;color:#E6DAF8;max-width:26em}
+.buscador{margin-top:20px;position:relative}
+.buscador svg{position:absolute;left:15px;top:50%;translate:0 -50%;width:20px;height:20px;color:var(--uva)}
+.buscador input{
+  width:100%;height:54px;border:0;border-radius:18px 18px 18px 6px;background:#fff;color:var(--tinta);
+  padding:0 16px 0 44px;font-size:16px;
+}
+.buscador input::placeholder{color:#8A7FA0}
+.sugeridos{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.sugeridos button{border:1px solid rgba(255,255,255,.42);background:transparent;color:#fff;border-radius:999px;padding:6px 13px;font-size:14px}
+.sugeridos button:hover{background:rgba(255,255,255,.14)}
+.aviso-ocultar{margin-top:18px;font-size:14px;color:#E6DAF8;display:flex;gap:9px;align-items:flex-start}
+.aviso-ocultar svg{flex:none;width:18px;height:18px;margin-top:2px;color:var(--loto-claro)}
+
+.bloque{padding:24px 20px 0}
+h2{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.015em;line-height:1.15}
+.bloque>p.sub{color:var(--gris);margin-top:6px}
+
+.resultados{padding:22px 20px 0}
+.resultados h2{font-size:19px}
+.fila{
+  width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #E7DDF6;
+  padding:14px 6px 14px 0;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;
+}
+.fila:first-of-type{border-top:1px solid #E7DDF6}
+.fila .n{font-family:var(--display);font-weight:700;font-size:18px}
+.fila .r{grid-column:1;color:var(--gris);font-size:14.5px}
+.fila svg{grid-row:1/3;grid-column:2;width:20px;height:20px;color:var(--violeta)}
+.lista{background:#fff;border-radius:16px;padding:0 16px;margin-top:12px}
+.nota-chica{font-size:14px;color:var(--gris);margin-top:12px}
+
+.segmentos{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:#E9DFF8;border-radius:14px;padding:4px;margin-top:14px}
+.segmentos button{border:0;background:transparent;border-radius:10px;padding:9px 4px;font-weight:600;font-size:14.5px;color:var(--uva)}
+.segmentos button[aria-selected="true"]{background:#fff;box-shadow:0 1px 3px rgba(36,16,70,.18)}
+.ruta{margin-top:14px}
+.ruta ul{list-style:none;padding:0}
+.ruta li{padding:11px 0 11px 22px;border-bottom:1px solid #E7DDF6;position:relative}
+.ruta li::before{content:"";position:absolute;left:2px;top:19px;width:9px;height:9px;border-radius:9px 0 9px 0;background:var(--loto)}
+.ruta li:last-child{border-bottom:0}
+
+.boton{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;
+  background:var(--uva);color:#fff;font-weight:600;padding:13px 20px;min-height:48px;
+}
+.boton:hover{background:var(--noche)}
+.boton.claro{background:#fff;color:var(--uva);box-shadow:inset 0 0 0 2px var(--lila)}
+.boton.ancho{width:100%}
+.boton:disabled{opacity:.5;cursor:not-allowed}
+.link{border:0;background:none;color:var(--uva);font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:10px 0}
+
+.privacidad{margin:26px 20px 28px;padding:18px;border-radius:22px 22px 22px 6px;background:var(--noche);color:#fff;display:flex;gap:14px}
+.privacidad svg{flex:none;width:26px;height:26px;color:var(--loto-claro)}
+.privacidad p{font-size:15px;color:#E6DAF8}
+.privacidad strong{display:block;font-family:var(--display);font-size:18px;color:#fff;margin-bottom:3px}
+
+/* Vistas internas */
+.cabecera{padding:24px 20px 6px}
+.cabecera h1{font-size:30px;color:var(--noche);max-width:none}
+.cabecera p{margin-top:8px;color:var(--gris)}
+
+.atlas{padding:10px 20px 28px}
+details{background:#fff;border-radius:16px;margin-top:10px;overflow:hidden}
+details[open]{box-shadow:inset 4px 0 0 var(--loto)}
+summary{list-style:none;padding:16px;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary .n{font-family:var(--display);font-weight:700;font-size:20px}
+summary .r{grid-column:1;color:var(--gris);font-size:14.5px}
+summary::after{content:"";grid-row:1/3;grid-column:2;width:10px;height:10px;border-right:2.5px solid var(--violeta);border-bottom:2.5px solid var(--violeta);rotate:45deg;transition:rotate .15s}
+details[open] summary::after{rotate:225deg}
+details dl{padding:0 16px 4px}
+details dt{font-weight:600;color:var(--uva);margin-top:10px}
+details dd{margin:2px 0 0}
+details .link{margin:6px 16px 8px}
+
+.definicion{margin:10px 20px 0;padding:14px 16px;border-radius:16px 16px 16px 4px;background:#fff;box-shadow:inset 4px 0 0 var(--loto)}
+.definicion strong{font-family:var(--display);font-size:17px;color:var(--noche)}
+.definicion p{margin-top:4px;font-size:15px;color:var(--tinta)}
+.mapa-caja{margin:12px 20px 0}
+.mapa-caja svg{display:block;width:100%;height:auto;border-radius:20px}
+.pin{cursor:pointer}
+.pin .anillo{opacity:0}
+.pin[aria-pressed="true"] .anillo{opacity:1}
+.pin[aria-pressed="true"] .punto{fill:var(--loto)}
+.pin text{font-family:var(--texto);font-size:10.5px;font-weight:600;fill:var(--noche);paint-order:stroke;stroke:#EFE6FB;stroke-width:3px}
+.sitios{padding:12px 20px 0}
+.sitio{
+  width:100%;text-align:left;border:0;background:#fff;border-radius:14px;padding:13px 14px;margin-top:8px;
+  display:grid;gap:1px;box-shadow:inset 0 0 0 2px transparent;
+}
+.sitio[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--violeta)}
+.sitio .n{font-weight:600}
+.sitio .r{color:var(--gris);font-size:14.5px}
+.detalle{margin:14px 20px 28px;padding:18px;border-radius:20px;background:#fff}
+.detalle h2{font-size:20px}
+.estado{display:inline-block;margin-top:8px;padding:3px 11px;border-radius:999px;font-size:14px;font-weight:600}
+.estado.si{background:#D9F3E4;color:#14603A}
+.estado.no{background:#EFE6FB;color:var(--uva)}
+.detalle p{margin-top:10px}
+
+/* Consultorio */
+.consultorio{padding:12px 20px 32px}
+.consultorio .segmentos{grid-template-columns:repeat(2,1fr);margin-top:6px}
+label{display:block;font-weight:600;margin:16px 0 6px}
+textarea,.codigo-entrada{width:100%;border:2px solid var(--lila);border-radius:14px;background:#fff;padding:12px 14px}
+textarea{min-height:150px;resize:vertical}
+.cuenta{text-align:right;font-size:13px;color:var(--gris);margin-top:4px}
+.aviso{margin-top:12px;padding:12px 14px;border-radius:12px;background:#EFE6FB;font-size:14.5px;color:var(--uva)}
+.token-caja{margin-top:16px;text-align:center;padding:22px 14px;border-radius:20px;background:#fff;box-shadow:inset 0 0 0 2px var(--uva)}
+.token{font-family:var(--display);font-weight:700;font-size:38px;letter-spacing:.1em;color:var(--noche);margin:8px 0 14px;font-variant-numeric:tabular-nums}
+.acciones{display:grid;gap:10px;margin-top:14px}
+.respuesta{margin-top:16px;padding:16px;border-radius:18px;background:#fff}
+.respuesta blockquote{margin:8px 0 0;padding-left:12px;border-left:3px solid var(--lila);color:var(--gris);overflow-wrap:anywhere}
+.respuesta .ejemplo{margin-top:14px;padding:14px;background:#FBEAF4;border-radius:14px 14px 14px 4px}
+.respuesta .ejemplo small{display:block;font-weight:600;color:var(--loto);margin-bottom:4px}
+.error{color:#A3123F;font-weight:600;margin-top:10px}
+
+/* Barra inferior */
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid #E7DDF6;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+.tabs button{border:0;background:none;display:grid;justify-items:center;gap:2px;padding:7px 2px;border-radius:12px;font-size:12.5px;font-weight:500;color:var(--gris)}
+.tabs svg{width:24px;height:24px}
+.tabs button[aria-current="page"]{color:var(--uva);font-weight:600;background:var(--bruma)}
+
+/* Calculadora de camuflaje */
+.calc{position:absolute;inset:0;z-index:20;background:#1C1C1E;display:grid;grid-template-rows:1fr auto;padding:0 14px calc(18px + env(safe-area-inset-bottom));color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.pantalla{display:flex;align-items:flex-end;justify-content:flex-end;padding:20px 8px 14px;font-size:68px;font-weight:300;overflow:hidden;white-space:nowrap}
+.teclas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.teclas button{aspect-ratio:1;border:0;border-radius:50%;font-size:30px;background:#333336;color:#fff;font-family:inherit;touch-action:manipulation}
+.teclas button.gris{background:#A5A5A8;color:#111}
+.teclas button.op{background:#F29A2E}
+.teclas button.cero{grid-column:span 2;aspect-ratio:auto;border-radius:999px;text-align:left;padding-left:30px}
+.teclas button:active{filter:brightness(1.35)}
+.calc :focus-visible{outline-color:#fff}
+
+.aviso-toast{position:absolute;left:16px;right:16px;bottom:84px;z-index:30;background:var(--noche);color:#fff;border-radius:14px;padding:12px 14px;font-size:14.5px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+
+@media (max-width:520px){
+  body{padding:0;gap:0;display:block;background:var(--bruma)}
+  .device{width:100%;height:100dvh;border-radius:0;box-shadow:none}
+  .nota{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div class="device" id="dispositivo">
+  <header class="top">
+    <div class="marca">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7C6E1"/><stop offset="1" stop-color="#B66AE8"/></linearGradient></defs>
+        <g fill="url(#lg)">
+          <ellipse cx="20" cy="15" rx="5" ry="11"/>
+          <ellipse cx="20" cy="15" rx="5" ry="11" transform="rotate(-38 20 31)"/>
+          <ellipse cx="20" cy="15" rx="5" ry="11" transform="rotate(38 20 31)"/>
+          <ellipse cx="20" cy="17" rx="4.5" ry="9" transform="rotate(-70 20 33)" opacity=".8"/>
+          <ellipse cx="20" cy="17" rx="4.5" ry="9" transform="rotate(70 20 33)" opacity=".8"/>
+        </g>
+      </svg>
+      <span>Liber<b>Arte</b></span>
+    </div>
+    <button class="ocultar" id="btnOcultar" title="Ocultar pantalla" aria-label="Ocultar pantalla: la app se convierte en una calculadora">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 6.1A10.6 10.6 0 0 1 12 6c5.5 0 9 6 9 6a16 16 0 0 1-3.2 3.9M6.6 7.6A16 16 0 0 0 3 12s3.5 6 9 6c1.4 0 2.7-.4 3.8-.9"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+      Ocultar
+    </button>
+  </header>
+
+  <main id="vistas" tabindex="-1">
+
+    <!-- INICIO -->
+    <section class="vista" id="v-inicio" aria-label="Inicio">
+      <div class="hero">
+        <h1>Preguntá sin dar tu nombre.</h1>
+        <p>Información sobre salud sexual, sin registro y sin juicios.</p>
+        <div class="buscador" role="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Escribí un síntoma, por ejemplo llaga" autocomplete="off" aria-label="Buscar un síntoma">
+        </div>
+        <div class="sugeridos" id="sugeridos">
+          <button type="button">Llaga</button>
+          <button type="button">Ardor al orinar</button>
+          <button type="button">Verrugas</button>
+          <button type="button">Erupción en las palmas</button>
+        </div>
+        <div class="aviso-ocultar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 6.1A10.6 10.6 0 0 1 12 6c5.5 0 9 6 9 6a16 16 0 0 1-3.2 3.9M6.6 7.6A16 16 0 0 0 3 12s3.5 6 9 6c1.4 0 2.7-.4 3.8-.9"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+          <span>Si alguien se acerca, tocá <strong>Ocultar</strong>: la pantalla se convierte en una calculadora. Para volver, mantené apretado el signo =.</span>
+        </div>
+      </div>
+
+      <div class="resultados" id="resultados" hidden aria-live="polite"></div>
+
+      <div class="bloque">
+        <h2>Elegí tu ruta</h2>
+        <div class="segmentos" role="tablist" aria-label="Ruta por edad">
+          <button role="tab" aria-selected="true" data-ruta="adolescente">13 a 17</button>
+          <button role="tab" aria-selected="false" data-ruta="adulto">18 o más</button>
+          <button role="tab" aria-selected="false" data-ruta="familia">Familias</button>
+        </div>
+        <div class="ruta" id="ruta" role="tabpanel"></div>
+      </div>
+
+      <div class="privacidad">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10.5" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.3"/></svg>
+        <p><strong>No pedimos tu identidad</strong>Sin DNI, correo ni teléfono. No guardamos tu IP ni tu ubicación. Las respuestas médicas se borran a los 30 días.</p>
+      </div>
+    </section>
+
+    <!-- ATLAS -->
+    <section class="vista" id="v-atlas" aria-label="Atlas de ITS" hidden>
+      <div class="cabecera">
+        <h1>Atlas de ITS</h1>
+        <p>Fichas para entender cada infección. Para saber qué tenés, hacete el test: es gratis y confidencial.</p>
+      </div>
+      <div class="atlas" id="atlasLista"></div>
+    </section>
+
+    <!-- MAPA -->
+    <section class="vista" id="v-mapa" aria-label="Mapa de CePATs" hidden>
+      <div class="cabecera">
+        <h1>Dónde testearte</h1>
+        <p>Puntos de atención pública en Orán con preservativos gratis y test rápidos de VIH y sífilis.</p>
+      </div>
+      <div class="definicion">
+        <strong>¿Qué es un CePAT?</strong>
+        <p>Un Centro de Prevención, Asesoramiento y Testeo. Es un servicio público donde te hacen el test de VIH y sífilis, te orientan antes y después, y te dan preservativos. Es gratis y confidencial.</p>
+      </div>
+      <div class="mapa-caja">
+        <svg viewBox="0 0 340 250" role="group" aria-label="Mapa esquemático con cuatro puntos de atención">
+          <rect width="340" height="250" fill="#E7DBF9"/>
+          <g fill="none" stroke="#fff" stroke-linecap="round">
+            <path d="M-10 62 C80 52 200 70 350 58" stroke-width="11"/>
+            <path d="M-10 126 C90 136 220 112 350 124" stroke-width="13"/>
+            <path d="M-10 196 C100 188 230 206 350 192" stroke-width="11"/>
+            <path d="M58 -10 C66 80 50 170 60 260" stroke-width="11"/>
+            <path d="M172 -10 C180 90 164 170 174 260" stroke-width="13"/>
+            <path d="M262 -10 C254 80 270 170 260 260" stroke-width="11"/>
+            <path d="M-10 94 L350 96M-10 160 L350 158M116 -10 L118 260M216 -10 L214 260" stroke-width="4"/>
+          </g>
+          <g fill="#D3C0F1"><rect x="124" y="164" width="38" height="24" rx="6"/><rect x="270" y="70" width="46" height="28" rx="6"/><rect x="14" y="132" width="34" height="22" rx="6"/></g>
+          <g id="pines"></g>
+        </svg>
+        <p class="nota-chica">Las ubicaciones son esquemáticas. La versión final mostrará el mapa real, guardado en el teléfono para usarlo sin internet.</p>
+      </div>
+      <div class="sitios" id="sitios"></div>
+      <div class="detalle" id="detalle" aria-live="polite"></div>
+    </section>
+
+    <!-- CONSULTORIO -->
+    <section class="vista" id="v-consultorio" aria-label="Consultorio virtual" hidden>
+      <div class="cabecera">
+        <h1>Consultorio virtual</h1>
+        <p>Escribí tu consulta sin registrarte. Te damos un código de 8 caracteres para leer la respuesta.</p>
+      </div>
+      <div class="consultorio">
+        <div class="segmentos" role="tablist" aria-label="Consultorio">
+          <button role="tab" aria-selected="true" data-modo="nueva">Nueva consulta</button>
+          <button role="tab" aria-selected="false" data-modo="leer">Ya tengo código</button>
+        </div>
+
+        <div id="modoNueva">
+          <form id="formConsulta">
+            <label for="mensaje">Tu consulta</label>
+            <textarea id="mensaje" maxlength="800" placeholder="Contanos qué te preocupa. No escribas tu nombre ni datos que te identifiquen." required></textarea>
+            <div class="cuenta"><span id="cuenta">0</span> de 800</div>
+            <div class="aviso">Sin nombre, sin correo, sin teléfono. Solo el código que te vamos a dar.</div>
+            <div class="acciones"><button class="boton ancho" type="submit">Enviar consulta anónima</button></div>
+          </form>
+          <div id="tokenNuevo" hidden>
+            <div class="token-caja">
+              <div>Tu código para leer la respuesta</div>
+              <div class="token" id="tokenTexto" aria-live="polite"></div>
+              <button class="boton claro" id="btnCopiar" type="button">Copiar código</button>
+            </div>
+            <div class="aviso">Guardalo ahora. Sin este código no podés volver a ver la respuesta, y nosotros no podemos recuperarlo.</div>
+            <div class="acciones"><button class="boton ancho" id="btnLeerAhora" type="button">Ver el estado de mi consulta</button></div>
+          </div>
+        </div>
+
+        <div id="modoLeer" hidden>
+          <form id="formCodigo">
+            <label for="codigo">Tu código</label>
+            <input class="codigo-entrada" id="codigo" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABCD 1234" inputmode="text">
+            <div class="acciones"><button class="boton ancho" type="submit">Leer mi respuesta</button></div>
+          </form>
+          <div id="estadoLectura" aria-live="polite"></div>
+        </div>
+
+        <p class="nota-chica">Prototipo: la consulta se guarda solo en este dispositivo para simular el recorrido. En la versión final viaja cifrada al equipo médico.</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs" aria-label="Secciones">
+    <button data-vista="inicio" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5.5h4V20"/></svg>Inicio</button>
+    <button data-vista="atlas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5v13"/></svg>Atlas</button>
+    <button data-vista="mapa">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Mapa</button>
+    <button data-vista="consultorio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.7 7.1L4 20l1-4A8 8 0 1 1 20 12z"/><path d="M9 11h6M9 14h4"/></svg>Consultorio</button>
+  </nav>
+
+  <!-- Camuflaje: calculadora escolar -->
+  <div class="calc" id="calc" hidden role="application" aria-label="Calculadora">
+    <div class="pantalla" id="pantalla" aria-live="off">0</div>
+    <div class="teclas" id="teclas">
+      <button class="gris" data-k="C">C</button><button class="gris" data-k="±">±</button><button class="gris" data-k="%">%</button><button class="op" data-k="÷">÷</button>
+      <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button><button class="op" data-k="×">×</button>
+      <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button><button class="op" data-k="−">−</button>
+      <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button><button class="op" data-k="+">+</button>
+      <button class="cero" data-k="0">0</button><button data-k=".">,</button><button class="op" id="btnIgual" data-k="=">=</button>
+    </div>
+  </div>
+  <div class="aviso-toast" id="toast" hidden role="status"></div>
+</div>
+<p class="nota">Prototipo navegable de LiberArte · Orán, Salta</p>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+
+/* ---------- Contenido (basado en el trabajo integrador) ---------- */
+const ITS=[
+ {id:"sifilis",nombre:"Sífilis",resumen:"La infección que más crece en Orán.",
+  kw:["llaga","chancro","herida","ulcera","erupcion","palmas","plantas","manchas","sarpullido","boca","genitales"],
+  bloques:[
+   ["Cómo se transmite","Por contacto sexual sin preservativo."],
+   ["Síntomas","Primera fase: una llaga indolora (chancro) en genitales o boca que desaparece sola, pero la bacteria sigue avanzando en la sangre. Segunda fase: erupciones en las palmas de las manos y las plantas de los pies."],
+   ["En el embarazo","Puede causar sífilis congénita y muerte fetal."],
+   ["Diagnóstico","Test rápido y análisis de sangre (VDRL), gratis en el Hospital San Vicente de Paúl."],
+   ["Tratamiento","Penicilina inyectable. Es curativa."]]},
+ {id:"vih",nombre:"VIH",resumen:"Puede pasar años sin dar síntomas.",
+  kw:["vih","sida","sin sintomas","no tengo sintomas","test","sangre","gota","inmune"],
+  bloques:[
+   ["Qué es","Un virus que ataca el sistema inmune. No da síntomas específicos durante años."],
+   ["Por qué importa testearse","Detectarlo tarde lleva a cuadros de SIDA con infecciones graves."],
+   ["Diagnóstico","Test voluntario, confidencial y rápido: 20 minutos con una gota de sangre."],
+   ["Tratamiento","Antirretrovirales gratuitos de por vida. Con carga viral indetectable, el virus es intransmisible (I=I)."]]},
+ {id:"vph",nombre:"VPH",resumen:"Hay vacuna gratuita.",
+  kw:["vph","verruga","verrugas","bultito","cuello","uterino","papiloma"],
+  bloques:[
+   ["Qué causa","Verrugas genitales y cáncer de cuello uterino."],
+   ["Prevención","Existe una vacuna gratuita a los 11 años."],
+   ["Qué hacer","Consultá en el CePAT para controles y orientación."]]},
+ {id:"gonorrea",nombre:"Gonorrea",resumen:"Ardor al orinar y secreción.",
+  kw:["ardor","orinar","miccion","secrecion","pus","flujo","dolor","infertilidad"],
+  bloques:[
+   ["Síntomas","Ardor intenso al orinar y secreción con pus."],
+   ["Si no se trata","Puede provocar infertilidad y enfermedad pélvica inflamatoria crónica."],
+   ["Qué hacer","Consultá en el CePAT: el diagnóstico y la orientación son gratuitos."]]}
+];
+
+const RUTAS={
+ adolescente:{items:["Mitos y verdades sobre el sexo","Consentimiento mutuo y explícito","Cómo usar bien el preservativo desde el inicio","Métodos anticonceptivos gratuitos en las salitas","Respuestas rápidas a los mitos de transmisión"],
+  cta:["Dónde conseguir preservativos gratis","mapa"]},
+ adulto:{items:["Guías completas de cada ITS","PrEP y PEP: qué hacer si se rompe el preservativo","Tus derechos de salud sexual y reproductiva","Controles periódicos"],
+  cta:["Ver el atlas de ITS","atlas"]},
+ familia:{items:["Cómo hablar de sexualidad sin juzgar","Comunicación asertiva con adolescentes","Qué dice la Ley ESI (26.150)","Prevención de violencias y abusos en el hogar"],
+  cta:["Consultar en privado","consultorio"]}
+};
+
+const SITIOS=[
+ {id:"hospital",nombre:"CePAT del Hospital San Vicente de Paúl",corto:"Infectología · lunes a viernes de 7 a 13 h, sin turno",x:172,y:122,r:14,
+  detalle:"Consultorio de Infectología. Atiende de lunes a viernes de 7 a 13 h, sin turno previo. Preservativos gratis y test rápidos de VIH y sífilis.",horario:true},
+ {id:"aeroparque",nombre:"Centro de Salud Barrio Aeroparque",corto:"Preservativos gratis y test rápidos",x:78,y:78,r:11,
+  detalle:"Preservativos gratis y test rápidos de VIH y sífilis. Consultá el horario en la salita."},
+ {id:"veinte",nombre:"Centro de Salud Barrio 20 de Febrero",corto:"Preservativos gratis y test rápidos",x:262,y:176,r:11,
+  detalle:"Preservativos gratis y test rápidos de VIH y sífilis. Consultá el horario en la salita."},
+ {id:"guemes",nombre:"Centro de Salud Barrio Güemes",corto:"Preservativos gratis y test rápidos",x:112,y:208,r:11,
+  detalle:"Preservativos gratis y test rápidos de VIH y sífilis. Consultá el horario en la salita."}
+];
+
+/* ---------- Navegación ---------- */
+const vistas=["inicio","atlas","mapa","consultorio"];
+function ir(nombre,extra){
+  vistas.forEach(v=>{$("#v-"+v).hidden=v!==nombre});
+  $$(".tabs button").forEach(b=>{b.toggleAttribute("aria-current",b.dataset.vista===nombre); if(b.dataset.vista===nombre)b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");});
+  const m=$("#vistas"); m.scrollTop=0;
+  if(nombre==="atlas") renderAtlas(extra);
+  if(nombre==="mapa") seleccionar(SITIOS[0].id,false);
+}
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]"); if(g) ir(g.dataset.go);
+});
+$$(".tabs button").forEach(b=>b.addEventListener("click",()=>ir(b.dataset.vista)));
+
+/* ---------- Inicio: búsqueda de síntomas ---------- */
+const q=$("#q"), res=$("#resultados");
+function buscar(){
+  const t=norm(q.value.trim());
+  if(!t){res.hidden=true;res.innerHTML="";return}
+  const palabras=t.split(/\s+/).filter(p=>p.length>=3);
+  const hallados=ITS.filter(i=>i.kw.some(k=>t.includes(k)||palabras.some(p=>k.includes(p)||p.includes(k))));
+  res.hidden=false;
+  const titulo=document.createElement("h2"); titulo.textContent="Información relacionada con “"+q.value.trim()+"”";
+  res.innerHTML=""; res.appendChild(titulo);
+  if(hallados.length){
+    const lista=document.createElement("div"); lista.className="lista";
+    hallados.forEach(i=>{
+      const b=document.createElement("button"); b.className="fila"; b.type="button";
+      b.innerHTML='<span class="n"></span><span class="r"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+      $(".n",b).textContent=i.nombre; $(".r",b).textContent=i.resumen;
+      b.addEventListener("click",()=>ir("atlas",i.id));
+      lista.appendChild(b);
+    });
+    res.appendChild(lista);
+    const p=document.createElement("p"); p.className="nota-chica";
+    p.textContent="Un síntoma solo no alcanza para saber qué tenés. El test rápido en un CePAT (Centro de Prevención, Asesoramiento y Testeo) es gratis y confidencial.";
+    res.appendChild(p);
+  }else{
+    const p=document.createElement("p"); p.className="nota-chica";
+    p.textContent="No encontramos esa palabra. Probá con otra, por ejemplo llaga o ardor, o escribí tu duda en el consultorio.";
+    res.appendChild(p);
+    const b=document.createElement("button"); b.className="link"; b.type="button"; b.textContent="Escribir en el consultorio"; b.dataset.go="consultorio";
+    res.appendChild(b);
+  }
+}
+q.addEventListener("input",buscar);
+$$("#sugeridos button").forEach(b=>b.addEventListener("click",()=>{q.value=b.textContent;buscar();res.scrollIntoView({block:"start"})}));
+
+/* ---------- Inicio: rutas por edad ---------- */
+function pintarRuta(k){
+  const r=RUTAS[k];
+  $("#ruta").innerHTML='<ul>'+r.items.map(i=>"<li>"+i+"</li>").join("")+'</ul>';
+  const b=document.createElement("button"); b.className="boton claro ancho"; b.type="button"; b.style.marginTop="12px";
+  b.textContent=r.cta[0]; b.dataset.go=r.cta[1]; $("#ruta").appendChild(b);
+}
+$$("[data-ruta]").forEach(b=>b.addEventListener("click",()=>{
+  $$("[data-ruta]").forEach(x=>x.setAttribute("aria-selected",x===b));
+  pintarRuta(b.dataset.ruta);
+}));
+pintarRuta("adolescente");
+
+/* ---------- Atlas ---------- */
+function renderAtlas(abrir){
+  $("#atlasLista").innerHTML=ITS.map(i=>
+   '<details id="its-'+i.id+'"'+(i.id===abrir?" open":"")+'><summary><span class="n">'+i.nombre+'</span><span class="r">'+i.resumen+'</span></summary><dl>'+
+   i.bloques.map(b=>"<dt>"+b[0]+"</dt><dd>"+b[1]+"</dd>").join("")+
+   '</dl><button class="link" type="button" data-go="mapa">Dónde hacerte el test</button></details>').join("");
+  if(abrir){const el=$("#its-"+abrir); if(el) setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+
+/* ---------- Mapa ---------- */
+function horarioHospital(){
+  const ahora=new Date(), d=ahora.getDay(), h=ahora.getHours()+ahora.getMinutes()/60;
+  const dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  if(d>=1&&d<=5&&h>=7&&h<13) return {abierto:true,txt:"Abierto ahora, hasta las 13 h"};
+  if(d>=1&&d<=5&&h<7) return {abierto:false,txt:"Cerrado, abre hoy a las 7 h"};
+  let sig=(d+1)%7; while(sig===0||sig===6) sig=(sig+1)%7;
+  const falta=(sig-d+7)%7;
+  return {abierto:false,txt:"Cerrado, abre "+(falta===1?"mañana":"el "+dias[sig])+" a las 7 h"};
+}
+function dibujarMapa(){
+  const NS="http://www.w3.org/2000/svg", g=$("#pines");
+  SITIOS.forEach(s=>{
+    const p=document.createElementNS(NS,"g");
+    p.setAttribute("class","pin"); p.setAttribute("tabindex","0"); p.setAttribute("role","button");
+    p.setAttribute("aria-label",s.nombre); p.setAttribute("aria-pressed","false"); p.dataset.id=s.id;
+    p.innerHTML='<circle class="anillo" cx="'+s.x+'" cy="'+s.y+'" r="'+(s.r+7)+'" fill="none" stroke="#D94F9B" stroke-width="3"/>'+
+      '<circle class="punto" cx="'+s.x+'" cy="'+s.y+'" r="'+s.r+'" fill="#4B2392" stroke="#fff" stroke-width="3"/>'+
+      (s.id==="hospital"?'<path d="M'+s.x+' '+(s.y-7)+'v14M'+(s.x-7)+' '+s.y+'h14" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>':'<circle cx="'+s.x+'" cy="'+s.y+'" r="3.4" fill="#fff"/>')+
+      '<text x="'+s.x+'" y="'+(s.y+s.r+14)+'" text-anchor="middle">'+({hospital:"Hospital",aeroparque:"Aeroparque",veinte:"20 de Febrero",guemes:"Güemes"})[s.id]+'</text>';
+    p.addEventListener("click",()=>seleccionar(s.id,true));
+    p.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();seleccionar(s.id,true)}});
+    g.appendChild(p);
+  });
+  $("#sitios").innerHTML=SITIOS.map(s=>'<button class="sitio" type="button" aria-pressed="false" data-id="'+s.id+'"><span class="n">'+s.nombre+'</span><span class="r">'+s.corto+'</span></button>').join("");
+  $$(".sitio").forEach(b=>b.addEventListener("click",()=>seleccionar(b.dataset.id,false)));
+}
+function seleccionar(id){
+  const s=SITIOS.find(x=>x.id===id);
+  $$(".pin").forEach(p=>p.setAttribute("aria-pressed",p.dataset.id===id));
+  $$(".sitio").forEach(b=>b.setAttribute("aria-pressed",b.dataset.id===id));
+  let est="";
+  if(s.horario){const h=horarioHospital(); est='<span class="estado '+(h.abierto?"si":"no")+'">'+h.txt+'</span>'}
+  $("#detalle").innerHTML="<h2>"+s.nombre+"</h2>"+est+"<p>"+s.detalle+"</p>";
+}
+dibujarMapa();
+
+/* ---------- Consultorio ---------- */
+const ALFABETO="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+let memoria={};
+function leer(){try{return JSON.parse(localStorage.getItem("liberarte_demo")||"{}")}catch(e){return memoria}}
+function guardar(o){memoria=o;try{localStorage.setItem("liberarte_demo",JSON.stringify(o))}catch(e){}}
+function nuevoToken(){
+  const a=new Uint32Array(8); (window.crypto||{getRandomValues:x=>x.forEach((_,i)=>x[i]=Math.random()*4294967296)}).getRandomValues(a);
+  return [...a].map(n=>ALFABETO[n%ALFABETO.length]).join("");
+}
+const grupo=t=>t.slice(0,4)+" "+t.slice(4);
+let tokenActual="";
+
+$$("[data-modo]").forEach(b=>b.addEventListener("click",()=>{
+  $$("[data-modo]").forEach(x=>x.setAttribute("aria-selected",x===b));
+  $("#modoNueva").hidden=b.dataset.modo!=="nueva"; $("#modoLeer").hidden=b.dataset.modo!=="leer";
+}));
+$("#mensaje").addEventListener("input",e=>{$("#cuenta").textContent=e.target.value.length});
+$("#formConsulta").addEventListener("submit",e=>{
+  e.preventDefault();
+  const txt=$("#mensaje").value.trim(); if(!txt) return;
+  const t=nuevoToken(), db=leer(); db[t]={texto:txt,ts:Date.now()}; guardar(db);
+  tokenActual=t; $("#tokenTexto").textContent=grupo(t);
+  $("#formConsulta").hidden=true; $("#tokenNuevo").hidden=false; $("#mensaje").value=""; $("#cuenta").textContent="0";
+  $("#tokenNuevo").scrollIntoView({block:"start"});
+});
+$("#btnCopiar").addEventListener("click",()=>{
+  const ok=()=>aviso("Código copiado");
+  try{navigator.clipboard.writeText(tokenActual).then(ok,()=>aviso("No se pudo copiar. Anotalo a mano."))}catch(e){aviso("No se pudo copiar. Anotalo a mano.")}
+});
+$("#btnLeerAhora").addEventListener("click",()=>{
+  $$("[data-modo]").forEach(x=>x.setAttribute("aria-selected",x.dataset.modo==="leer"));
+  $("#modoNueva").hidden=true; $("#modoLeer").hidden=false;
+  $("#formConsulta").hidden=false; $("#tokenNuevo").hidden=true;
+  $("#codigo").value=grupo(tokenActual); mostrarEstado(tokenActual);
+});
+$("#codigo").addEventListener("input",e=>{
+  const t=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,8);
+  e.target.value=t.length>4?grupo(t):t;
+});
+$("#formCodigo").addEventListener("submit",e=>{
+  e.preventDefault(); mostrarEstado($("#codigo").value.toUpperCase().replace(/[^A-Z0-9]/g,""));
+});
+function mostrarEstado(t){
+  const caja=$("#estadoLectura"); caja.innerHTML="";
+  const c=leer()[t];
+  if(t.length!==8||!c){
+    const p=document.createElement("p"); p.className="error";
+    p.textContent="No encontramos ese código. Revisalo: son 8 letras y números.";
+    caja.appendChild(p); return;
+  }
+  const d=document.createElement("div"); d.className="respuesta";
+  d.innerHTML='<strong>Consulta recibida</strong><blockquote></blockquote><p style="margin-top:12px">Todavía no tiene respuesta del equipo médico. Volvé a ingresar tu código más tarde.</p><button class="link" type="button" id="btnEjemplo">Ver un ejemplo de respuesta</button><div id="ejemplo"></div>';
+  $("blockquote",d).textContent=c.texto;
+  caja.appendChild(d);
+  $("#btnEjemplo").addEventListener("click",()=>{
+    $("#ejemplo").innerHTML='<div class="ejemplo"><small>Ejemplo de respuesta (prototipo)</small>Gracias por escribir. Con lo que contás no se puede saber qué tenés, y no hace falta adivinarlo: el test rápido de VIH y sífilis es gratis y sin turno en el CePAT del Hospital San Vicente de Paúl, de lunes a viernes de 7 a 13 h. Si querés, andá con alguien de confianza.</div>';
+    $("#btnEjemplo").hidden=true;
+  });
+}
+
+/* ---------- Toast ---------- */
+let tt;
+function aviso(msg,ms){const t=$("#toast");t.textContent=msg;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>{t.hidden=true},ms||2400)}
+
+/* ---------- Camuflaje: calculadora ---------- */
+const calc=$("#calc"), pant=$("#pantalla"), tituloOriginal=document.title;
+let cur="0",prev=null,op=null,nuevo=false,primera=true;
+function fmt(n){
+  if(!isFinite(n)) return "Error";
+  let s=String(parseFloat(n.toPrecision(10)));
+  if(s.length>11) s=n.toExponential(5);
+  return s;
+}
+function mostrar(){pant.textContent=cur==="Error"?"Error":cur.replace(".",",");pant.style.fontSize=cur.length>9?"44px":cur.length>7?"56px":"68px"}
+function calcular(){
+  const a=prev,b=parseFloat(cur);
+  const r=op==="+"?a+b:op==="−"?a-b:op==="×"?a*b:b===0?NaN:a/b;
+  return fmt(r);
+}
+function tecla(k){
+  if(cur==="Error"&&k!=="C"){return}
+  if(/^[0-9]$/.test(k)){ if(nuevo||cur==="0"){cur=k;nuevo=false}else if(cur.replace(/[-.]/g,"").length<9)cur+=k }
+  else if(k==="."){ if(nuevo){cur="0.";nuevo=false}else if(!cur.includes("."))cur+="." }
+  else if(k==="C"){cur="0";prev=null;op=null;nuevo=false}
+  else if(k==="±"){ if(cur!=="0")cur=cur.startsWith("-")?cur.slice(1):"-"+cur }
+  else if(k==="%"){ cur=fmt(parseFloat(cur)/100) }
+  else if(k==="="){ if(op!==null&&prev!==null){cur=calcular();op=null;prev=null;nuevo=true} }
+  else { if(op!==null&&!nuevo){cur=calcular()} prev=parseFloat(cur); op=k; nuevo=true; if(cur==="Error"){prev=null;op=null} }
+  mostrar();
+}
+function ocultar(){
+  calc.hidden=false; document.title="Calculadora"; document.body.style.background="#1C1C1E";
+  cur="0";prev=null;op=null;nuevo=false;mostrar();
+  if(primera){primera=false;aviso("Para volver, mantené apretado el signo =",3200)}
+}
+function volver(){
+  calc.hidden=true; document.title=tituloOriginal; document.body.style.background="";
+  $("#toast").hidden=true; $("#btnOcultar").focus({preventScroll:true});
+}
+$("#btnOcultar").addEventListener("click",ocultar);
+$$("#teclas button").forEach(b=>{ if(b.id!=="btnIgual") b.addEventListener("click",()=>tecla(b.dataset.k)) });
+
+// El signo = funciona normal con un toque; si se mantiene apretado, vuelve a LiberArte.
+const igual=$("#btnIgual"); let pulsado=null, largo=false;
+igual.addEventListener("pointerdown",()=>{largo=false;pulsado=setTimeout(()=>{largo=true;volver()},700)});
+["pointerup","pointerleave","pointercancel"].forEach(ev=>igual.addEventListener(ev,()=>clearTimeout(pulsado)));
+igual.addEventListener("click",()=>{ if(!largo) tecla("=") ; largo=false });
+igual.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.shiftKey){e.preventDefault();volver()} });
+
+document.addEventListener("keydown",e=>{
+  if(calc.hidden){ if(e.key==="Escape") ocultar(); return }
+  const m={"/":"÷","*":"×","-":"−","+":"+",",":".",".":".","Enter":"=","=":"=","Backspace":"C","Delete":"C"};
+  if(/^[0-9]$/.test(e.key)) tecla(e.key); else if(m[e.key]){ e.preventDefault(); tecla(m[e.key]) }
+});
+})();
+</script>
+</body>
+</html>
