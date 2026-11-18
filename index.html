@@ -10,16 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --noche:#241046;
-  --uva:#4B2392;
-  --violeta:#7A3FC4;
-  --lila:#D9C6F5;
-  --bruma:#F6F1FD;
-  --loto:#D94F9B;
-  --loto-claro:#F7C6E1;
-  --tinta:#2A1A45;
-  --gris:#675B7C;
-  --blanco:#fff;
+  --noche:#241046;--uva:#4B2392;--violeta:#7A3FC4;--lila:#D9C6F5;--bruma:#F6F1FD;
+  --loto:#D94F9B;--loto-claro:#F7C6E1;--tinta:#2A1A45;--gris:#675B7C;--blanco:#fff;
   --display:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;
   --texto:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
@@ -45,7 +37,6 @@ button{cursor:pointer}
 }
 .nota{color:var(--lila);font-size:13px;opacity:.85;text-align:center}
 
-/* Encabezado */
 .top{background:var(--noche);display:flex;align-items:center;justify-content:space-between;padding:14px 16px 12px 20px}
 .marca{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;font-size:23px;letter-spacing:-.02em;color:#fff}
 .marca b{color:#F08AC4;font-weight:700}
@@ -60,7 +51,6 @@ main{overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
 .vista{animation:entra .18s ease-out}
 @keyframes entra{from{opacity:0}to{opacity:1}}
 
-/* Inicio */
 .hero{background:linear-gradient(165deg,var(--noche) 0%,var(--uva) 62%,var(--violeta) 100%);color:#fff;padding:18px 20px 28px;border-radius:0 0 36px 36px}
 h1{font-family:var(--display);font-weight:700;font-size:32px;line-height:1.06;letter-spacing:-.025em;max-width:11em}
 .hero p{margin-top:10px;color:#E6DAF8;max-width:26em}
@@ -97,6 +87,9 @@ h2{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01
 .segmentos{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:#E9DFF8;border-radius:14px;padding:4px;margin-top:14px}
 .segmentos button{border:0;background:transparent;border-radius:10px;padding:9px 4px;font-weight:600;font-size:14.5px;color:var(--uva)}
 .segmentos button[aria-selected="true"]{background:#fff;box-shadow:0 1px 3px rgba(36,16,70,.18)}
+.segmentos.dos{grid-template-columns:repeat(2,1fr)}
+.segmentos.sub{margin-top:8px;background:#F1E9FB}
+.segmentos.sub button{font-size:14px;font-weight:500}
 .ruta{margin-top:14px}
 .ruta ul{list-style:none;padding:0}
 .ruta li{padding:11px 0 11px 22px;border-bottom:1px solid #E7DDF6;position:relative}
@@ -118,7 +111,6 @@ h2{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01
 .privacidad p{font-size:15px;color:#E6DAF8}
 .privacidad strong{display:block;font-family:var(--display);font-size:18px;color:#fff;margin-bottom:3px}
 
-/* Vistas internas */
 .cabecera{padding:24px 20px 6px}
 .cabecera h1{font-size:30px;color:var(--noche);max-width:none}
 .cabecera p{margin-top:8px;color:var(--gris)}
@@ -162,7 +154,14 @@ details .link{margin:6px 16px 8px}
 .estado.no{background:#EFE6FB;color:var(--uva)}
 .detalle p{margin-top:10px}
 
-/* Consultorio */
+/* Farmacias */
+.farmacia{background:#fff;border-radius:16px;padding:14px 16px;margin-top:10px;display:grid;gap:3px}
+.farmacia .n{font-family:var(--display);font-weight:700;font-size:18px}
+.farmacia .r{color:var(--gris);font-size:14.5px}
+.farmacia .turno{display:inline-block;justify-self:start;margin-top:6px;padding:3px 11px;border-radius:999px;background:#D9F3E4;color:#14603A;font-size:14px;font-weight:600}
+.farmacia .turno.noche{background:#EFE6FB;color:var(--uva)}
+.farmacia .link{justify-self:start;padding:6px 0 0}
+
 .consultorio{padding:12px 20px 32px}
 .consultorio .segmentos{grid-template-columns:repeat(2,1fr);margin-top:6px}
 label{display:block;font-weight:600;margin:16px 0 6px}
@@ -179,13 +178,11 @@ textarea{min-height:150px;resize:vertical}
 .respuesta .ejemplo small{display:block;font-weight:600;color:var(--loto);margin-bottom:4px}
 .error{color:#A3123F;font-weight:600;margin-top:10px}
 
-/* Barra inferior */
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid #E7DDF6;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
-.tabs button{border:0;background:none;display:grid;justify-items:center;gap:2px;padding:7px 2px;border-radius:12px;font-size:12.5px;font-weight:500;color:var(--gris)}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid #E7DDF6;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.tabs button{border:0;background:none;display:grid;justify-items:center;gap:2px;padding:7px 0;border-radius:12px;font-size:11.5px;font-weight:500;color:var(--gris)}
 .tabs svg{width:24px;height:24px}
 .tabs button[aria-current="page"]{color:var(--uva);font-weight:600;background:var(--bruma)}
 
-/* Calculadora de camuflaje */
 .calc{position:absolute;inset:0;z-index:20;background:#1C1C1E;display:grid;grid-template-rows:1fr auto;padding:0 14px calc(18px + env(safe-area-inset-bottom));color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 .pantalla{display:flex;align-items:flex-end;justify-content:flex-end;padding:20px 8px 14px;font-size:68px;font-weight:300;overflow:hidden;white-space:nowrap}
 .teclas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -233,7 +230,6 @@ textarea{min-height:150px;resize:vertical}
 
   <main id="vistas" tabindex="-1">
 
-    <!-- INICIO -->
     <section class="vista" id="v-inicio" aria-label="Inicio">
       <div class="hero">
         <h1>Preguntá sin dar tu nombre.</h1>
@@ -258,10 +254,13 @@ textarea{min-height:150px;resize:vertical}
 
       <div class="bloque">
         <h2>Elegí tu ruta</h2>
-        <div class="segmentos" role="tablist" aria-label="Ruta por edad">
-          <button role="tab" aria-selected="true" data-ruta="adolescente">13 a 17</button>
-          <button role="tab" aria-selected="false" data-ruta="adulto">18 o más</button>
-          <button role="tab" aria-selected="false" data-ruta="familia">Familias</button>
+        <div class="segmentos dos" role="tablist" aria-label="Ruta">
+          <button role="tab" aria-selected="true" data-ruta="individuo">Individuo</button>
+          <button role="tab" aria-selected="false" data-ruta="familia">Familia</button>
+        </div>
+        <div class="segmentos dos sub" id="subEdad" role="tablist" aria-label="Edad">
+          <button role="tab" aria-selected="true" data-edad="adulto">18 o más</button>
+          <button role="tab" aria-selected="false" data-edad="adolescente">Menor de 18</button>
         </div>
         <div class="ruta" id="ruta" role="tabpanel"></div>
       </div>
@@ -272,7 +271,6 @@ textarea{min-height:150px;resize:vertical}
       </div>
     </section>
 
-    <!-- ATLAS -->
     <section class="vista" id="v-atlas" aria-label="Atlas de ITS" hidden>
       <div class="cabecera">
         <h1>Atlas de ITS</h1>
@@ -281,7 +279,6 @@ textarea{min-height:150px;resize:vertical}
       <div class="atlas" id="atlasLista"></div>
     </section>
 
-    <!-- MAPA -->
     <section class="vista" id="v-mapa" aria-label="Mapa de CePATs" hidden>
       <div class="cabecera">
         <h1>Dónde testearte</h1>
@@ -312,7 +309,21 @@ textarea{min-height:150px;resize:vertical}
       <div class="detalle" id="detalle" aria-live="polite"></div>
     </section>
 
-    <!-- CONSULTORIO -->
+    <section class="vista" id="v-farmacias" aria-label="Farmacias de turno" hidden>
+      <div class="cabecera">
+        <h1>Farmacias de turno</h1>
+        <p>Para conseguir preservativos o consultar de noche y fines de semana.</p>
+      </div>
+      <div class="consultorio">
+        <div class="segmentos dos" role="tablist" aria-label="Día">
+          <button role="tab" aria-selected="true" data-dia="hoy">Hoy</button>
+          <button role="tab" aria-selected="false" data-dia="manana">Mañana</button>
+        </div>
+        <div id="listaFarmacias"></div>
+        <p class="nota-chica">Datos de muestra. La versión final se actualiza con el listado oficial de turnos.</p>
+      </div>
+    </section>
+
     <section class="vista" id="v-consultorio" aria-label="Consultorio virtual" hidden>
       <div class="cabecera">
         <h1>Consultorio virtual</h1>
@@ -364,11 +375,12 @@ textarea{min-height:150px;resize:vertical}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5v13"/></svg>Atlas</button>
     <button data-vista="mapa">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Mapa</button>
+    <button data-vista="farmacias">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg>Farmacias</button>
     <button data-vista="consultorio">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.7 7.1L4 20l1-4A8 8 0 1 1 20 12z"/><path d="M9 11h6M9 14h4"/></svg>Consultorio</button>
   </nav>
 
-  <!-- Camuflaje: calculadora escolar -->
   <div class="calc" id="calc" hidden role="application" aria-label="Calculadora">
     <div class="pantalla" id="pantalla" aria-live="off">0</div>
     <div class="teclas" id="teclas">
@@ -387,9 +399,8 @@ textarea{min-height:150px;resize:vertical}
 (function(){
 "use strict";
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 
-/* ---------- Contenido (basado en el trabajo integrador) ---------- */
 const ITS=[
  {id:"sifilis",nombre:"Sífilis",resumen:"La infección que más crece en Orán.",
   kw:["llaga","chancro","herida","ulcera","erupcion","palmas","plantas","manchas","sarpullido","boca","genitales"],
@@ -441,13 +452,13 @@ const SITIOS=[
 ];
 
 /* ---------- Navegación ---------- */
-const vistas=["inicio","atlas","mapa","consultorio"];
+const vistas=["inicio","atlas","mapa","farmacias","consultorio"];
 function ir(nombre,extra){
   vistas.forEach(v=>{$("#v-"+v).hidden=v!==nombre});
-  $$(".tabs button").forEach(b=>{b.toggleAttribute("aria-current",b.dataset.vista===nombre); if(b.dataset.vista===nombre)b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");});
-  const m=$("#vistas"); m.scrollTop=0;
+  $$(".tabs button").forEach(b=>{ if(b.dataset.vista===nombre)b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");});
+  $("#vistas").scrollTop=0;
   if(nombre==="atlas") renderAtlas(extra);
-  if(nombre==="mapa") seleccionar(SITIOS[0].id,false);
+  if(nombre==="mapa") seleccionar(SITIOS[0].id);
 }
 document.addEventListener("click",e=>{
   const g=e.target.closest("[data-go]"); if(g) ir(g.dataset.go);
@@ -488,18 +499,24 @@ function buscar(){
 q.addEventListener("input",buscar);
 $$("#sugeridos button").forEach(b=>b.addEventListener("click",()=>{q.value=b.textContent;buscar();res.scrollIntoView({block:"start"})}));
 
-/* ---------- Inicio: rutas por edad ---------- */
-function pintarRuta(k){
-  const r=RUTAS[k];
+/* ---------- Inicio: rutas (Individuo | Familia) ---------- */
+let rutaSel="individuo", edadSel="adulto";
+function pintarRuta(){
+  const k=rutaSel==="familia"?"familia":edadSel, r=RUTAS[k];
+  $("#subEdad").hidden=rutaSel==="familia";
   $("#ruta").innerHTML='<ul>'+r.items.map(i=>"<li>"+i+"</li>").join("")+'</ul>';
   const b=document.createElement("button"); b.className="boton claro ancho"; b.type="button"; b.style.marginTop="12px";
   b.textContent=r.cta[0]; b.dataset.go=r.cta[1]; $("#ruta").appendChild(b);
 }
 $$("[data-ruta]").forEach(b=>b.addEventListener("click",()=>{
   $$("[data-ruta]").forEach(x=>x.setAttribute("aria-selected",x===b));
-  pintarRuta(b.dataset.ruta);
+  rutaSel=b.dataset.ruta; pintarRuta();
 }));
-pintarRuta("adolescente");
+$$("[data-edad]").forEach(b=>b.addEventListener("click",()=>{
+  $$("[data-edad]").forEach(x=>x.setAttribute("aria-selected",x===b));
+  edadSel=b.dataset.edad; pintarRuta();
+}));
+pintarRuta();
 
 /* ---------- Atlas ---------- */
 function renderAtlas(abrir){
@@ -530,12 +547,12 @@ function dibujarMapa(){
       '<circle class="punto" cx="'+s.x+'" cy="'+s.y+'" r="'+s.r+'" fill="#4B2392" stroke="#fff" stroke-width="3"/>'+
       (s.id==="hospital"?'<path d="M'+s.x+' '+(s.y-7)+'v14M'+(s.x-7)+' '+s.y+'h14" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>':'<circle cx="'+s.x+'" cy="'+s.y+'" r="3.4" fill="#fff"/>')+
       '<text x="'+s.x+'" y="'+(s.y+s.r+14)+'" text-anchor="middle">'+({hospital:"Hospital",aeroparque:"Aeroparque",veinte:"20 de Febrero",guemes:"Güemes"})[s.id]+'</text>';
-    p.addEventListener("click",()=>seleccionar(s.id,true));
-    p.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();seleccionar(s.id,true)}});
+    p.addEventListener("click",()=>seleccionar(s.id));
+    p.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();seleccionar(s.id)}});
     g.appendChild(p);
   });
   $("#sitios").innerHTML=SITIOS.map(s=>'<button class="sitio" type="button" aria-pressed="false" data-id="'+s.id+'"><span class="n">'+s.nombre+'</span><span class="r">'+s.corto+'</span></button>').join("");
-  $$(".sitio").forEach(b=>b.addEventListener("click",()=>seleccionar(b.dataset.id,false)));
+  $$(".sitio").forEach(b=>b.addEventListener("click",()=>seleccionar(b.dataset.id)));
 }
 function seleccionar(id){
   const s=SITIOS.find(x=>x.id===id);
@@ -546,6 +563,28 @@ function seleccionar(id){
   $("#detalle").innerHTML="<h2>"+s.nombre+"</h2>"+est+"<p>"+s.detalle+"</p>";
 }
 dibujarMapa();
+
+/* ---------- Farmacias de turno (datos de muestra) ---------- */
+const TURNOS={
+ hoy:[
+  {n:"Farmacia de muestra 1",dir:"Dirección de ejemplo 100 · Centro",tel:"387 000-0001",h:"Turno 24 horas",noche:true},
+  {n:"Farmacia de muestra 2",dir:"Dirección de ejemplo 250 · Barrio Aeroparque",tel:"387 000-0002",h:"Turno de 8 a 22 h",noche:false}],
+ manana:[
+  {n:"Farmacia de muestra 3",dir:"Dirección de ejemplo 480 · Barrio Güemes",tel:"387 000-0003",h:"Turno 24 horas",noche:true},
+  {n:"Farmacia de muestra 4",dir:"Dirección de ejemplo 75 · Barrio 20 de Febrero",tel:"387 000-0004",h:"Turno de 8 a 22 h",noche:false}]
+};
+function pintarFarmacias(dia){
+  $("#listaFarmacias").innerHTML=TURNOS[dia].map(f=>
+   '<div class="farmacia"><span class="n">'+f.n+'</span><span class="r">'+f.dir+'</span><span class="r">Tel. '+f.tel+'</span>'+
+   '<span class="turno'+(f.noche?" noche":"")+'">'+f.h+'</span>'+
+   '<button class="link" type="button" data-aviso="1">Cómo llegar</button></div>').join("");
+}
+$$("[data-dia]").forEach(b=>b.addEventListener("click",()=>{
+  $$("[data-dia]").forEach(x=>x.setAttribute("aria-selected",x===b));
+  pintarFarmacias(b.dataset.dia);
+}));
+$("#listaFarmacias").addEventListener("click",e=>{ if(e.target.closest("[data-aviso]")) aviso("En la versión final abre el mapa con la ruta") });
+pintarFarmacias("hoy");
 
 /* ---------- Consultorio ---------- */
 const ALFABETO="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -649,7 +688,6 @@ function volver(){
 $("#btnOcultar").addEventListener("click",ocultar);
 $$("#teclas button").forEach(b=>{ if(b.id!=="btnIgual") b.addEventListener("click",()=>tecla(b.dataset.k)) });
 
-// El signo = funciona normal con un toque; si se mantiene apretado, vuelve a LiberArte.
 const igual=$("#btnIgual"); let pulsado=null, largo=false;
 igual.addEventListener("pointerdown",()=>{largo=false;pulsado=setTimeout(()=>{largo=true;volver()},700)});
 ["pointerup","pointerleave","pointercancel"].forEach(ev=>igual.addEventListener(ev,()=>clearTimeout(pulsado)));
